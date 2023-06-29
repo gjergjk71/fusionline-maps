@@ -1,0 +1,8 @@
+const fs = require("fs");
+
+let data = JSON.parse(fs.readFileSync(__dirname + '/dataset/germany__cities__dressmaker__joined.json', 'utf8'));
+
+let count = data.Germany.map(x => x.links.length)
+let c = 0;
+for (let co of count) c += co;
+console.log(c); 

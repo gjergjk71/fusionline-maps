@@ -2,14 +2,17 @@ const { chromium, devices } = require('playwright');
 const fs = require("fs");
 var request = require('request');
 
-let places = JSON.parse(fs.readFileSync(__dirname + '/dataset/germany__cities.json', 'utf8')).Germany.map(city => {
+let places = JSON.parse(fs.readFileSync(__dirname + '/dataset/germany__cities__dressmaker__joined.json', 'utf8')).Germany.map(city => {
     return (city.links || []).map(link => ({
         link,
         ...city,
         links: undefined,
         skipped: city.skipped || 0
     }))
-}).flat().reverse();
+}).flat()
+
+places = places.splice((106406 / 10) * 9, (106406 / 10) * 10)
+
 // let data__keys = Object.keys(data).filter(x => data[x].find(cities => !cities.api_sent)); //['Germany'] 
 let data__keys_x = 0;
 
@@ -1367,7 +1370,7 @@ let data__keys_x = 0;
             context.close()
             continue;
         }
-        request.post('https://linecontact.pythonanywhere.com/places/', {
+        request.post('http://127.0.0.1:8000/places/', {
             'auth': {
                 'user': 'linecontact',
                 'pass': 'line.123'
@@ -1384,5 +1387,5 @@ let data__keys_x = 0;
     
         data__keys_x++;
         context.close()
-    }
-})()
+    }   
+})()    
